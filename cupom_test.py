@@ -26,25 +26,25 @@ IE: 244.898.500.113
 
 def test_nome_vazio():
     global nome_loja
-    nome_loja = ""
+    cupom.nome_loja = ""
     with pytest.raises(Exception) as excinfo:
         cupom.dados_loja()
     the_exception = excinfo.value
-    assert "O campo logradouro do endereço é obrigatório" in str(the_exception) 
-    nome_loja = "Arcos Dourados Com. de Alimentos LTDA"
+    assert "O campo nome da loja é obrigatório" in str(the_exception) 
+    cupom.nome_loja = "Arcos Dourados Com. de Alimentos LTDA"
 
 def test_logradouro_vazio():
     global logradouro
-    logradouro = ""
+    cupom.logradouro = ""
     with pytest.raises(Exception) as excinfo:
         cupom.dados_loja()
     the_exception = excinfo.value
     assert "O campo logradouro do endereço é obrigatório" in str(the_exception) 
-    logradouro = "Av. Projetada Leste"
+    cupom.logradouro = "Av. Projetada Leste"
 
 def test_numero_zero():
     global numero
-    numero = 0
+    cupom.numero = 0
     assert cupom.dados_loja() == '''Arcos Dourados Com. de Alimentos LTDA
 Av. Projetada Leste, s/n EUC F32/33/34
 Br. Sta Genebra - Campinas - SP
@@ -53,43 +53,43 @@ Loja 1317 (PDP)
 CNPJ: 42.591.651/0797-34
 IE: 244.898.500.113
 '''
-    numero = 500
+    cupom.numero = 500
 
 def test_municipio_vazio():
     global municipio
-    municipio = ""
+    cupom.municipio = ""
     with pytest.raises(Exception) as excinfo:
         cupom.dados_loja()
     the_exception = excinfo.value
     assert "O campo município do endereço é obrigatório" in str(the_exception) 
-    municipio = "Campinas"
+    cupom.municipio = "Campinas"
 
 def test_estado_vazio():
     global estado
-    estado = ""
+    cupom.estado = ""
     with pytest.raises(Exception) as excinfo:
         cupom.dados_loja()
     the_exception = excinfo.value
     assert "O campo estado do endereço é obrigatório" in str(the_exception) 
-    estado = "SP"
+    cupom.estado = "SP"
 
 def test_cnpj_vazio():
     global cnpj
-    cnpj = ""
+    cupom.cnpj = ""
     with pytest.raises(Exception) as excinfo:
         cupom.dados_loja()
     the_exception = excinfo.value
     assert "O campo CNPJ da loja é obrigatório" in str(the_exception) 
-    cnpj = "42.591.651/0797-34"
+    cupom.cnpj = "42.591.651/0797-34"
 
 def test_inscricao_estadual_vazia():
     global inscricao_estadual
-    inscricao_estadual = ""
+    cupom.inscricao_estadual = ""
     with pytest.raises(Exception) as excinfo:
         cupom.dados_loja()
     the_exception = excinfo.value
     assert "O campo inscrição estadual da loja é obrigatório" in str(the_exception) 
-    inscricao_estadual = "244.898.500.113"
+    cupom.inscricao_estadual = "244.898.500.113"
 
 def test_exercicio2_customizado():
     global nome_loja
@@ -106,19 +106,26 @@ def test_exercicio2_customizado():
     global inscricao_estadual
     
     # Defina seus próprios valores para as variáveis a seguir
-    nome_loja = ""
-    logradouro = ""
-    numero = 0
-    complemento = ""
-    bairro = ""
-    municipio = ""
-    estado = ""
-    cep = ""
-    telefone = ""
-    observacao = ""
-    cnpj = ""
-    inscricao_estadual = ""
+    cupom.nome_loja = "Boa vista Flores"
+    cupom.logradouro = "Rua Jardim Peres"
+    cupom.numero = 122
+    cupom.complemento = "EUC F30/31/44"
+    cupom.bairro = "Centro"
+    cupom.municipio = "Monteiro"
+    cupom.estado = "PB"
+    cupom.cep = "58500000"
+    cupom.telefone = "(99) 9999-9999"
+    cupom.observacao = "Loja 122 (PDB)"
+    cupom.cnpj = "22.300.551/0110-56"
+    cupom.inscricao_estadual = "432.118.667.777"
 
     #E atualize o texto esperado abaixo
-    assert cupom.dados_loja() == '''
-'''
+    assert cupom.dados_loja() == ( 
+'''Boa vista Flores
+Rua Jardim Peres, 122 EUC F30/31/44
+Centro - Monteiro - PB
+CEP:58500000 Tel (99) 9999-9999
+Loja 122 (PDB)
+CNPJ: 22.300.551/0110-56
+IE: 432.118.667.777
+''')
